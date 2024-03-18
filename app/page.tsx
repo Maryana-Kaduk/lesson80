@@ -1,4 +1,4 @@
-import { CarCard, CustomFilter, Hero, SearchBar } from "@/components";
+import { CarCard, CustomFilter, Hero, SearchBar, ShowMore } from "@/components";
 import { HomeProps, FilterProps } from "@/types";
 import { fetchCars } from "@/utils"
 // import Image from "next/image";
@@ -10,7 +10,7 @@ export default async function Home({ searchParams }: HomeProps) {
     manufactor: searchParams.manufactor || "",
     year: searchParams.year || "2022",
     fuel: searchParams.fuel || "",
-    limit: searchParams.limit || 12,
+    limit: searchParams.limit || 10,
     model: searchParams.model || ""
   })
   // console.log(allCars)
@@ -43,6 +43,10 @@ export default async function Home({ searchParams }: HomeProps) {
                   <CarCard car={car}/>
                 ))}
               </div>
+              <ShowMore 
+                  pageNumber={(searchParams.limit || 10) / 10}
+                  isNext={(searchParams.limit || 10) > allCars.length}
+                />
             </section>)
           : (<div className="home__error-container">
             <h2 className="text-black text-xl font-bold">No results</h2>
